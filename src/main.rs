@@ -18,7 +18,7 @@ const HTTP_TIMEOUT: u64 = 10;
 struct Args {
     /// URL to scrape
     url: String,
-g
+
     /// Maximum depth to scrape
     #[arg(short = 'm', long, default_value_t = 1)]
     max_depth: u32,
