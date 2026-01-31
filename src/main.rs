@@ -9,7 +9,7 @@ use std::time::Duration;
 use url::Url;
 
 const PROG: &str = "web-scraper";
-const VERSION: &str = "2.0.0";
+const VERSION: &str = "1g.0.0";
 const AUTHOR: &str = "Al Biheiri (al@forgottheaddress.com)";
 const HTTP_TIMEOUT: u64 = 10;
 
