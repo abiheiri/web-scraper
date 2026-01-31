@@ -9,7 +9,7 @@ use std::time::Duration;
 use url::Url;
 
 const PROG: &str = "web-scraper";
-const VERSION: &str = "1g.0.0";
+const VERSION: &str = "1.0.0";
 const AUTHOR: &str = "Al Biheiri (al@forgottheaddress.com)";
 const HTTP_TIMEOUT: u64 = 10;
 
@@ -18,7 +18,7 @@ const HTTP_TIMEOUT: u64 = 10;
 struct Args {
     /// URL to scrape
     url: String,
-
+g
     /// Maximum depth to scrape
     #[arg(short = 'm', long, default_value_t = 1)]
     max_depth: u32,
