@@ -4,20 +4,20 @@ A command-line web scraper that recursively finds links on web pages.
 
 ## Build
 
-```
+```bash
 cargo build --release
 ```
 
 ## Usage
 
-```
+```bash
 web-scraper <url> [options]
 ```
 
 ### Options
 
 | Flag | Description |
-|------|-------------|
+| ------ | ------------- |
 | `-m, --max-depth <N>` | How deep to follow links (default: 1, max: 10) |
 | `-f, --filter <ext>` | Only show links with this file extension |
 | `-h, --help` | Show help |
@@ -25,7 +25,7 @@ web-scraper <url> [options]
 
 ### Examples
 
-```
+```bash
 # Scrape links from a page
 web-scraper example.com
 
