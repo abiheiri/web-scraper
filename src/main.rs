@@ -9,7 +9,7 @@ use std::time::Duration;
 use url::Url;
 
 const PROG: &str = "web-scraper";
-const VERSION: &str = "1.0.0";
+const VERSION: &str = "1.0.1";
 const AUTHOR: &str = "Al Biheiri (al@forgottheaddress.com)";
 const HTTP_TIMEOUT: u64 = 10;
 
@@ -103,9 +103,16 @@ impl Scraper {
         }
     }
 
-    fn is_directory_link(&self, link: &str) -> bool {
+    // This is to fix filter and maxdepth enabled together.
+    fn is_navigable_link(&self, link: &str) -> bool {
         if let Some(last_segment) = link.split('/').last() {
-            link.contains('/') && !last_segment.contains('.')
+            let clean = last_segment.split(&['#', '?'][..]).next().unwrap_or(last_segment);
+            let lower = clean.to_lowercase();
+            let is_directory = !clean.contains('.');
+            let is_web_page = [".html", ".htm", ".php", ".asp", ".aspx", ".jsp", ".cgi"]
+                .iter()
+                .any(|ext| lower.ends_with(ext));
+            is_directory || is_web_page
         } else {
             false
         }
@@ -124,7 +131,7 @@ impl Scraper {
                 return;
             }
 
-            if self.is_valid_link(&link) || self.is_directory_link(&link) {
+            if self.is_valid_link(&link) || self.is_navigable_link(&link) {
                 if self.is_valid_link(&link) {
                     println!("{}", link);
                 }
