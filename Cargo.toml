@@ -1,11 +1,11 @@
 [package]
 name = "web-scraper"
-version = "1.0.0"
+version = "1.0.4"
 edition = "2024"
 
 [dependencies]
-reqwest = { version = "0.13.1", features = ["blocking"] }
-scraper = "0.25.0"
-clap = { version = "4", features = ["derive"] }
+reqwest = { version = "0.13.3", features = ["blocking"] }
+scraper = "0.27.0"
+clap = { version = "4.6.1", features = ["derive"] }
 url = "2"
-ctrlc = "3"
+ctrlc = "3.5.2"
