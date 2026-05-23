@@ -9,7 +9,7 @@ use std::time::Duration;
 use url::Url;
 
 const PROG: &str = "web-scraper";
-const VERSION: &str = "1.0.4";
+const VERSION: &str = "1.0.5";
 const AUTHOR: &str = "Al Biheiri (al@forgottheaddress.com)";
 const HTTP_TIMEOUT: u64 = 10;
 
@@ -103,18 +103,20 @@ impl Scraper {
         }
     }
 
-    // This is to fix filter and maxdepth enabled together.
+    // This function checks if the link is navigable by sending a HEAD request and checking the content type
     fn is_navigable_link(&self, link: &str) -> bool {
-        if let Some(last_segment) = link.split('/').last() {
-            let clean = last_segment.split(&['#', '?'][..]).next().unwrap_or(last_segment);
-            let lower = clean.to_lowercase();
-            let is_directory = !clean.contains('.');
-            let is_web_page = [".html", ".htm", ".php", ".asp", ".aspx", ".jsp", ".cgi"]
-                .iter()
-                .any(|ext| lower.ends_with(ext));
-            is_directory || is_web_page
-        } else {
-            false
+        match self.client.head(link).send() {
+            Ok(resp) => resp
+                .headers()
+                .get("content-type")
+                .and_then(|ct| ct.to_str().ok())
+                .is_some_and(|ct| {
+                    ct.starts_with("text/html")
+                        || ct.starts_with("text/plain")
+                        || ct == "application/xhtml+xml"
+                        || ct.starts_with("application/xml")
+                }),
+            Err(_) => false,
         }
     }
 
